@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Aquarium</title>
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: lightgrey;
+    }
+</style>
+<body>
+    <h1>List of Fishes</h1>
+    <div id="app">
+        <button v-on:click="getAllFishes()" class="btn btn-primary">Get All fishes</button> <br><br>
+        <input placeholder="Name" type="text" v-model="name">
+        <button v-on:click="filterByName(name)" class="btn btn-primary">Filter Name</button> <br><br>
+        <input placeholder="Species" type="text" v-model="species">
+        <button v-on:click="filterBySpecies(species)" class="btn btn-primary">Filter Species</button> <br><br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Length</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="data in filteredFishes">
+                    <td>{{data.id}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.species}}</td>
+                    <td>{{data.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Add Fish</h2>
+        <input id="name" v-model="addData.name" placeholder="name" type="text" />
+        <input id="species" v-model="addData.species" placeholder="species" type="text" />
+        <input id="length" v-model.number="addData.length" placeholder="length" type="number" />
+        <button id="addFish" v-on:click="addFish()" class="btn btn-success">Add</button>
+        <div v-if="addMessage.length > 0" id="addMessage">{{addMessage}}</div><br><br>
+
+        <h2>Delete</h2>
+        <input id="deleteInput"v-model.number="deleteId" placeholder="id" type="number" />
+        <button id="deleteButton"v-on:click="deleteFish(deleteId)" class="btn btn-warning">Delete</button>
+        <div v-if="deleteMessage.length > 0" id="outputDelete">{{deleteMessage}}</div>
+        <br>
+
+        <h2>Update</h2>
+        <input id="id"v-model.number="updateData.id" placeholder="id" type="number" />
+        <input id="updateName" v-model.number="updateData.name" placeholder="name" type="text" />
+        <input id="updateSpecies" v-model="updateData.species" placeholder="species" type="text" />
+        <input id="updateLength"v-model="updateData.length" placeholder="length" type="number" />
+        <button id="updateFish"v-on:click="updateFish()" class="btn btn-success">Update</button>
+        <div id="updateMessage" v-if="updateMessage.length > 0">{{updateMessage}}</div>
+
+    </div>
+</body>
+<script src="js/index.js"></script>
+</html>
